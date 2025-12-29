@@ -1,0 +1,1 @@
+function getNotes(){return new Promise(r=>chrome.storage.local.get({notes:[]},v=>r(v.notes)))}function setNotes(n){return new Promise(r=>chrome.storage.local.set({notes:n},r))}

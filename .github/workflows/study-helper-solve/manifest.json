@@ -1,0 +1,30 @@
+{
+  "name": "Study Helper \u2014 UpLearn Friendly",
+  "description": "Summarise, explain, make flashcards & quick quizzes. Includes a Solve button for everyday tasks via screenshot + vision model. Ethically assists learning.",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Study Helper"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["bypass-video.js", "content.js", "storage.js"],
+      "css": ["sidebar.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
