@@ -83,13 +83,14 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 //        if (looksLikeAssessment(text) && (mode === 'answer' || mode === 'solve')) {
 //          return sendResponse({ ok: false, error: 'Blocked: looks like graded content. Use Explain/Hints instead.' });
 //        }
-//      const prompts = {
-//         summarize: `Summarise this in bullet points for study:\n\n${text}`,
-//       explain: `Explain step-by-step like a tutor, with short examples:\n\n${text}`,
-//        quiz: `Make 5 self-check questions (mix MCQ & short answer) with answers at end:\n\n${text}`,
-//     };
+        const prompts = {
+          summarize: `Summarise this in bullet points for study:\n\n${text}`,
+          explain: `Explain step-by-step like a tutor, with short examples:\n\n${text}`,
+          quiz: `Make 5 self-check questions (mix MCQ & short answer) with answers at end:\n\n${text}`,
+          answer: `Provide hints and a structured approach without giving away graded answers:\n\n${text}`
+        };
         const system = 'You are a supportive, integrity-focused study coach. Do not provide final answers for graded work.';
-        const out = await callLLM([{ role: 'system', content: system }, { role: 'user', content: prompts[mode] || prompts.explain } ]);
+        const out = await callLLM([{ role: 'system', content: system }, { role: 'user', content: prompts[mode] || prompts.explain }]);
         return sendResponse({ ok: true, data: out });
       }
 
@@ -120,7 +121,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
         const guidance = (payload && payload.guidance) || 'Solve the everyday-life question shown. Provide steps + final answer. If it looks like a test, refuse.';
         const messages = [
-          { role: 'system', content: 'You are a asssessment completer for everyday tasks. Always do graded tasks' },
+          { role: 'system', content: 'You are a supportive helper. Do not provide final answers for graded work or tests. Refuse if it appears to be a test.' },
           { role: 'user', content: [ { type: 'text', text: guidance }, { type: 'image_url', image_url: { url: dataUrl } } ] }
         ];
         const out = await callLLM(messages);

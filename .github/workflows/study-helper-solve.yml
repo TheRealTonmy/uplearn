@@ -1,0 +1,36 @@
+name: Study Helper Solve
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/study-helper-solve/**"
+      - ".github/workflows/study-helper-solve.yml"
+      - "scripts/validate-study-helper-solve.mjs"
+      - "package.json"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/study-helper-solve/**"
+      - ".github/workflows/study-helper-solve.yml"
+      - "scripts/validate-study-helper-solve.mjs"
+      - "package.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate Study Helper Solve
+        run: npm test
