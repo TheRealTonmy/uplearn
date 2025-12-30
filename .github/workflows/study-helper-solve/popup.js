@@ -24,7 +24,10 @@ $('clear').addEventListener('click', () => {
 $('inject').addEventListener('click', async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab?.id) return;
-  await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ['content.js', 'storage.js'] });
+  await chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    files: ['content.js', 'storage.js', 'sidebar.js']
+  });
   await chrome.scripting.insertCSS({ target: { tabId: tab.id }, files: ['sidebar.css'] });
 });
 
