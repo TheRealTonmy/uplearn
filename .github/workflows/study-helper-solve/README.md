@@ -30,6 +30,10 @@ The extension reads configuration from Chrome storage. Provide these values in t
 - **API Key** (your provider key)
 - **Model** (e.g. `gemini-1.5-flash`, `gpt-4o-mini`)
 
+## Optional developer mode
+
+Set `localStorage.study_helper_dev = "true"` in the page console to log solve timings.
+
 ## What the workflow checks
 
 The GitHub Actions workflow validates that:
